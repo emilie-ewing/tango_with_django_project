@@ -15,10 +15,15 @@ def index(request):
     #category_list to the dictionary context_dictionary
     category_list = Category.objects.order_by('-likes')[:5]
 
+    #query the page model to get the 5 most viewed pages
+    page_list = Page.objects.order_by('-views')[:5]
+
     context_dict = {}
-    #context_dict contains two key-value pairs
+    #context_dict contains two key-value pairs (three after adding pages from chap 6 exercises)
     context_dict['boldmessage'] = 'Crunchy, creamy, cookie, candy, cupcake!'
     context_dict['categories'] = category_list
+    context_dict['pages'] = page_list
+    
 
     #render the response and send it back
     return render(request, 'rango/index.html', context=context_dict)
