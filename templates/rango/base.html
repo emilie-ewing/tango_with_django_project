@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+
+<html>
+    
+    <!-- we use the block tag to denote the parts of the template
+        which can be overridden by the templates that inherit from it-->
+    <head>
+        <title>
+            Rango - 
+            <!--title block allows us to specify a custom title page for each page 
+            inheriting from our base template. If one of them doesn't override it, it defaults
+            to How to Tango with Django! so the complete title will be Rango - How to Tango 
+            with Django!-->
+            {% block title_block %}
+                <!--default content is used if no inheriting template defines the block-->
+                How to Tango with Django!
+            {% endblock %}
+        </title>
+    </head>
+    <body>
+        <div>   
+            {% block body_block %}
+            {% endblock %}
+        </div>
+        <!-- hr is a thematic break in an HTML page often displayed as a horizontal rule-->
+        <hr />
+        <div>
+            <ul>
+                <!--links from our current index.html template and a linke to the index page-->
+                <!-- ensures links are present across all pages inheriting from the base template-->
+                <li><a href="{% url 'rango:add_category' %}">Add a New Category</a></li>
+                <li><a href="{% url 'rango:about' %}">About</a></li>
+                <li><a href="{% url 'rango:index' %}">Index</a></li>
+            </ul>
+        </div>
+
+    </body>
+</html>

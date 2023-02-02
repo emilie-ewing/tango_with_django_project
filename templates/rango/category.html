@@ -1,37 +1,33 @@
-<!DOCTYPE html>
+{% extends 'rango/base.html' %}
+{% load staticfiles %}
 
-<html>
+{% block title_block %}
+    {% if category %}
+        {{ category.name }}
+    {% else %}
+        Unknown Category
+    {% endif %}
+{% endblock %}
 
-    <head>
-        <title>Rango</title>
-    </head>
-
-    <body>
-        <div>
-            <!--if the category exists we check to see if there's any pages in it-->
-        {% if category %}
-            <h1>{{ category.name }}</h1>
-            {% if pages %}
-            <ul>
-                <!-- for all pages in the pages list, output the title and url attributes in a hyperlink-->
-                {% for page in pages %}
+{% block body_block %}
+    <!--if the category exists we check to see if there's any pages in it-->
+    {% if category %}
+        <h1>{{ category.name }}</h1>
+        {% if pages %}
+        <ul>
+            <!-- for all pages in the pages list, output the title and url attributes in a hyperlink-->
+            {% for page in pages %}
                 <li><a href="{{ page.url }}">{{ page.title }}</a></li>
-                {% endfor %}
-            </ul>
-            {% else %}
-            <strong>No pages currently in category.</strong>
-            {% endif %}
-            <a href="/rango/category/{{ category.slug }}/add_page/">Add Page</a> <br/>
+            {% endfor %}
+        </ul>
         {% else %}
-            The specified category does not exist.
+           <strong>No pages currently in category.</strong>
         {% endif %}
-        </div>
 
-        <div>
-            <a href="/rango/">Index</a><br />
-        </div>
-
-        </div>
-    </body>
-
-</html>
+        <!--referring to rango/<category-name>/add_page/ URL pattern. The category.slug is passed through
+            as a parameter to the url template tag.-->
+        <a href="{% url 'rango:add_page' category.slug %}">Add Page</a> <br/>
+    {% else %}
+        The specified category does not exist.
+    {% endif %}
+{% endblock %}
