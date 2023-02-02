@@ -1,0 +1,15 @@
+<ul>
+    {% if categories %}
+        {% for c in categories %}
+            <!-- we check to see if the category being displayed is the same as the one being passed 
+            through during the for loop. If this is the case, we highlight the category name by making it bold.-->
+            {% if  c == current_category %}
+                <li><strong><a href="{% url 'rango:show_category' c.slug %}">{{ c.name }}</a></strong></li>
+            {% else %}
+                <li><a href="{% url 'rango:show_category' c.slug %}">{{ c.name }}</a></li>
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        <li><strong>There are no categories present.</strong></li>
+    {% endif %}
+</ul>

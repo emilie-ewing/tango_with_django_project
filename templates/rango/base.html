@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 {% load staticfiles %}
 
+<!--we use this to use our template tag-->
+{% load rango_template_tags %}
+
 <html>
     
     <!-- we use the block tag to denote the parts of the template
         which can be overridden by the templates that inherit from it-->
     <head>
+        <!--title block allows us to specify a custom title page for each page 
+        inheriting from our base template. If one of them doesn't override it, it defaults
+        to How to Tango with Django! so the complete title will be Rango - How to Tango 
+        with Django!-->
         <title>
             Rango - 
-            <!--title block allows us to specify a custom title page for each page 
-            inheriting from our base template. If one of them doesn't override it, it defaults
-            to How to Tango with Django! so the complete title will be Rango - How to Tango 
-            with Django!-->
             {% block title_block %}
-                <!--default content is used if no inheriting template defines the block-->
+                
                 How to Tango with Django!
             {% endblock %}
         </title>
@@ -23,6 +26,15 @@
             {% block body_block %}
             {% endblock %}
         </div>
+
+        <!--create a new block to represent the sidebar and call the template tag.
+        All pages inheriting from base.html will include a list of categories.-->
+        <div>
+            {% block sidebar_block %}
+                {% get_category_list category %}
+            {% endblock %}
+        </div>
+
         <!-- hr is a thematic break in an HTML page often displayed as a horizontal rule-->
         <hr />
         <div>

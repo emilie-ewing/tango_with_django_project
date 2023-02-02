@@ -33,6 +33,7 @@ def index(request):
     return render(request, 'rango/index.html', context=context_dict)
 
 
+
 def about(request):
     return render(request, 'rango/about.html')
 
@@ -84,7 +85,8 @@ def add_category(request):
             form.save(commit=True)
             #now that the category is saved, we could confirm this.
             #For now, just redirect the user back to tne index view
-            return redirect('/rango/')
+            return redirect(reverse('rango:index'))
+            #return redirect(reverse('rango:show_category', kwargs={'category_name_slug':category_name_slug}))
         else:
             #the supplied form contains errors - just print them to the terminal
             print(form.errors)
@@ -107,7 +109,8 @@ def add_page(request, category_name_slug):
 
     #You cannot add a page to a Category that does not exist
     if category is None:
-        return redirect('/rango/')
+        return redirect(reverse('rango:index'))
+        #return redirect('/rango/')
 
     form = PageForm()
 
