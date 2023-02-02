@@ -5,7 +5,8 @@ from django.template.defaultfilters import slugify
 # Create your models here.
 
 class Category(models.Model):
-    name = models.CharField(max_length=128, unique=True)
+    NAME_MAX_LENGTH = 128
+    name = models.CharField(max_length=NAME_MAX_LENGTH, unique=True)
     views = models.IntegerField(default=0)
     likes = models.IntegerField(default=0)
     # slugify() makes the slugs lower case so if we have two categories with one
@@ -27,6 +28,9 @@ class Category(models.Model):
         return self.name
 
 class Page(models.Model):
+    TITLE_MAX_LENGTH =128
+    URL_MAX_LENGTH = 200
+    
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     title = models.CharField(max_length=128)
     url = models.URLField()
