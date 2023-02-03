@@ -1,5 +1,7 @@
 from django import forms
 from rango.models import Page, Category
+from django.contrib.auth.models import User
+from rango.models import UserProfile
 
 class CategoryForm(forms.ModelForm):
     name = forms.CharField(max_length=Category.NAME_MAX_LENGTH, help_text="Please enter the category name.")
@@ -39,3 +41,19 @@ class PageForm(forms.ModelForm):
         exclude = ('category',)
         #or specify the fields to include (don't include the category field).
         #fields = ('title', 'url', 'views')
+
+class UserForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput())
+
+    #meta classes describe additional properties about the particular class to which it belongs.
+    class Meta:
+        model = User
+        #we want to show the username, email and password fields associated with the User model.
+        fields = ('username', 'email', 'password',)
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        #for the user field within the UserProfile model, we need to make the association when we register
+        #the user. When we create a UserProfile instance, we won't yet have the User instance to refer to.
+        fields = ('website', 'picture',)

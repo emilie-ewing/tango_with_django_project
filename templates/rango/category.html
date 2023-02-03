@@ -26,7 +26,9 @@
 
         <!--referring to rango/<category-name>/add_page/ URL pattern. The category.slug is passed through
             as a parameter to the url template tag.-->
-        <a href="{% url 'rango:add_page' category.slug %}">Add Page</a> <br/>
+        {% if user.is_authenticated %}
+            <a href="{% url 'rango:add_page' category.slug %}">Add Page</a> <br/>
+        {% endif %}
     {% else %}
         The specified category does not exist.
     {% endif %}

@@ -1,6 +1,7 @@
 from django.db import models
 from django.template.defaultfilters import slugify
 #slugify replaces whitespace with hyphens 
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -39,3 +40,21 @@ class Page(models.Model):
     def __str__(self):
         return self.title
 
+class UserProfile(models.Model):
+    #this line is required. Links UserProfile to a User model instance.
+    #notice we reference the User model using a one-to-one relationship.
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    #the additional attributes we wish to include.
+    #we set blank=True for both fields, users don't need to supply a value.
+    #ImageField has an upload_to attribute. The value of this attribute is conjoined with the project's
+    #MEDIA_ROOT setting to provide a path with which uploaded profile images will be stored.
+    #e.g. a MEDIA_ROOT of <workspace>/tango_with_django_project/media/ and upload_to attribute of 
+    #profile_images results in all profile images being stored in the directory:
+    #<workspace>/tango_with_django_project/media/profile_images/.
+    website = models.URLField(blank=True)
+    picture = models.ImageField(upload_to='profile_images', blank=True)
+
+    #use the __str__ method to return a meaningful value 
+    def __str__(self):
+        return self.user.username

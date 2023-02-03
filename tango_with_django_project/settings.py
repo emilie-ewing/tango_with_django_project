@@ -128,3 +128,7 @@ USE_TZ = True
 
 STATICFILES_DIRS =[STATIC_DIR, ]
 STATIC_URL = '/static/'
+
+#Log in URL
+#define the URL we would like to redirect users to that aren't logged in
+LOGIN_URL = 'rango:login'
